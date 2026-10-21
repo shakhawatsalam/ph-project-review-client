@@ -1,69 +1,122 @@
-import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle2, Clock3, FolderKanban, XCircle } from "lucide-react";
+
+const stats = [
+  {
+    title: "Total Projects",
+    value: 2,
+    icon: FolderKanban,
+  },
+  {
+    title: "Pending Review",
+    value: 0,
+    icon: Clock3,
+  },
+  {
+    title: "Approved",
+    value: 2,
+    icon: CheckCircle2,
+  },
+  {
+    title: "Rejected",
+    value: 0,
+    icon: XCircle,
+  },
+];
+
+const projects = [
+  {
+    name: "My Portfolio Website",
+    student: "Student One",
+    status: "APPROVED",
+  },
+  {
+    name: "Review Test Project",
+    student: "Student Two",
+    status: "APPROVED",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className='min-h-screen bg-muted/30'>
+      <div className='mx-auto max-w-7xl space-y-8 p-6 md:p-10'>
+        <header>
+          <p className='text-sm font-medium text-muted-foreground'>
+            PROJECT MANAGEMENT
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          <h1 className='mt-2 text-3xl font-bold tracking-tight'>
+            Project Review Dashboard
+          </h1>
+          <p className='mt-2 text-muted-foreground'>
+            Track submissions and manage project reviews.
+          </p>
+        </header>
+
+        <section className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+          {stats.map((stat) => {
+            const Icon = stat.icon;
+
+            return (
+              <Card key={stat.title}>
+                <CardHeader className='flex flex-row items-center justify-between pb-2'>
+                  <CardTitle className='text-sm font-medium'>
+                    {stat.title}
+                  </CardTitle>
+                  <Icon className='size-5 text-muted-foreground' />
+                </CardHeader>
+                <CardContent>
+                  <p className='text-3xl font-bold'>{stat.value}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </section>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Projects</CardTitle>
+            <p className='text-sm text-muted-foreground'>
+              A preview of submitted projects.
+            </p>
+          </CardHeader>
+
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Project</TableHead>
+                  <TableHead>Student</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {projects.map((project) => (
+                  <TableRow key={project.name}>
+                    <TableCell className='font-medium'>
+                      {project.name}
+                    </TableCell>
+                    <TableCell>{project.student}</TableCell>
+                    <TableCell>
+                      <Badge>{project.status}</Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 }
