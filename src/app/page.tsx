@@ -9,29 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Clock3, FolderKanban, XCircle } from "lucide-react";
-
-const stats = [
-  {
-    title: "Total Projects",
-    value: 2,
-    icon: FolderKanban,
-  },
-  {
-    title: "Pending Review",
-    value: 0,
-    icon: Clock3,
-  },
-  {
-    title: "Approved",
-    value: 2,
-    icon: CheckCircle2,
-  },
-  {
-    title: "Rejected",
-    value: 0,
-    icon: XCircle,
-  },
-];
+import { useMentorStats } from "@/hooks/use-mentor-stats";
 
 const projects = [
   {
@@ -47,6 +25,42 @@ const projects = [
 ];
 
 export default function Home() {
+  const { data, isLoading, isError } = useMentorStats();
+
+  const stats = [
+    {
+      title: "Total Projects",
+      value: data?.total ?? 0,
+      icon: FolderKanban,
+    },
+    {
+      title: "Pending Review",
+      value: data?.pending ?? 0,
+      icon: Clock3,
+    },
+    {
+      title: "Approved",
+      value: data?.approved ?? 0,
+      icon: CheckCircle2,
+    },
+    {
+      title: "Rejected",
+      value: data?.rejected ?? 0,
+      icon: XCircle,
+    },
+  ];
+
+  if (isLoading) {
+    return <main className='p-10'>Loading dashboard statistics...</main>;
+  }
+
+  if (isError) {
+    return (
+      <main className='p-10'>
+        Unable to load statistics. Please log in with a mentor account.
+      </main>
+    );
+  }
   return (
     <main className='min-h-screen bg-muted/30'>
       <div className='mx-auto max-w-7xl space-y-8 p-6 md:p-10'>
