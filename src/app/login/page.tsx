@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import { useQueryClient } from "@tanstack/react-query";
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email address."),
   password: z.string().min(1, "Password is required."),
@@ -25,6 +25,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [serverError, setServerError] = useState("");
 
   const {
@@ -58,12 +59,14 @@ export default function LoginPage() {
 
     try {
       const response = await api.post("/api/auth/login", validation.data);
-      const role = response.data.data.role;
+      const user = response.data.data;
 
-      if (role === "MENTOR") {
-        router.push("/mentor");
+      queryClient.setQueryData(["auth-user"], user);
+
+      if (user.role === "MENTOR") {
+        router.replace("/mentor");
       } else {
-        router.push("/student");
+        router.replace("/student");
       }
     } catch (error: unknown) {
       if (typeof error === "object" && error !== null && "response" in error) {
