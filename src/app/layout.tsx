@@ -27,7 +27,15 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <div aria-hidden='true' className='aqua-aura'>
+          <div className='aqua-aura-layer aqua-aura-layer-1' />
+          <div className='aqua-aura-layer aqua-aura-layer-2' />
+          <div className='aqua-aura-layer aqua-aura-layer-3' />
+          <div className='aqua-aura-layer aqua-aura-layer-4' />
+        </div>
+        <div className='app-content'>
+          <Providers>{children}</Providers>
+        </div>
         <Toaster />
       </body>
     </html>

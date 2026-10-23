@@ -104,7 +104,7 @@ export default function MentorDashboardPage() {
 
   return (
     <AuthGuard requiredRole='MENTOR'>
-      <main className='min-h-screen bg-muted/30 p-6 md:p-10'>
+      <main className='min-h-screen p-6 md:p-10'>
         <div className='mx-auto max-w-7xl space-y-8'>
           <header>
             <p className='text-sm font-medium text-muted-foreground'>
@@ -126,7 +126,9 @@ export default function MentorDashboardPage() {
               const Icon = stat.icon;
 
               return (
-                <Card key={stat.title}>
+                <Card
+                  key={stat.title}
+                  className='border-white/70 bg-white/65 shadow-lg shadow-cyan-950/5 backdrop-blur-xl'>
                   <CardHeader className='flex flex-row items-center justify-between pb-2'>
                     <CardTitle className='text-sm font-medium'>
                       {stat.title}
@@ -145,7 +147,7 @@ export default function MentorDashboardPage() {
             })}
           </section>
 
-          <Card>
+          <Card className='border-white/70 bg-white/65 shadow-xl shadow-cyan-950/5 backdrop-blur-xl'>
             <CardHeader>
               <CardTitle>Project Submissions</CardTitle>
               <CardDescription>
