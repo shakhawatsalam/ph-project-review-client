@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import api from "@/lib/axios";
@@ -141,6 +142,14 @@ export default function LoginPage() {
               {isSubmitting ? "Signing in..." : "Sign in"}
             </Button>
           </form>
+          <p className='mt-5 text-center text-sm text-muted-foreground'>
+            New to Project Review?{" "}
+            <Link
+              href='/signup'
+              className='font-medium text-primary underline-offset-4 hover:underline'>
+              Sing up
+            </Link>
+          </p>
         </CardContent>
       </Card>
     </main>
